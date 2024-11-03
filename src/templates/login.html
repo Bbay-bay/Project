@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Se connecter</title>
+    <style>
+      :root {
+        --primary-color: #4a90e2;
+        --error-color: #e74c3c;
+        --background-color: #f5f6fa;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        background-color: var(--background-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.2rem;
+      }
+
+      form {
+        background-color: white;
+        padding: 35px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px var(--shadow-color);
+        width: 100%;
+        max-width: 380px;
+        animation: slideUp 0.5s ease-out;
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      p {
+        margin-bottom: 24px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #34495e;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+        background-color: #ffffff;
+      }
+
+      input[type="text"]:focus,
+      input[type="password"]:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+      }
+
+      input[type="password"] {
+        letter-spacing: 0.1em;
+      }
+
+      input[type="submit"] {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 14px 24px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        width: 100%;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #357abd;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px var(--shadow-color);
+      }
+
+      input[type="submit"]:active {
+        transform: translateY(0);
+        box-shadow: none;
+      }
+
+      span[style="color: red;"] {
+        color: var(--error-color) !important;
+        font-size: 14px;
+        display: block;
+        margin-top: 5px;
+      }
+
+      /* Enhanced focus styles for accessibility */
+      *:focus {
+        outline: none;
+      }
+
+      *:focus-visible {
+        outline: 3px solid rgba(74, 144, 226, 0.5);
+        outline-offset: 2px;
+      }
+
+      @media (max-width: 600px) {
+        body {
+          padding: 15px;
+        }
+
+        form {
+          padding: 25px;
+        }
+
+        h1 {
+          font-size: 1.8rem;
+          margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="submit"] {
+          padding: 12px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        form {
+          animation: none;
+        }
+
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <ul>
+      {% for category, message in messages %}
+      <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+    <h1>Se connecter</h1>
+    <form method="POST">
+      {{ form.hidden_tag() }}
+      <p>
+        {{ form.login.label }}<br />
+        {{ form.login(size=32) }}<br />
+        {% for error in form.login.errors %}
+        <span style="color: red">[{{ error }}]</span>
+        {% endfor %}
+      </p>
+      <p>
+        {{ form.password.label }}<br />
+        {{ form.password(size=32) }}<br />
+        {% for error in form.password.errors %}
+        <span style="color: red">[{{ error }}]</span>
+        {% endfor %}
+      </p>
+      <p>{{ form.submit() }}</p>
+    </form>
+  </body>
+</html>
